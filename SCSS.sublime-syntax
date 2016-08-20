@@ -7,9 +7,9 @@ scope: source.scss
 
 contexts:
   main:
-    - include: comment
+    - include: comments
 
-  comment:
+  comments:
     - include: comment-line
     - include: comment-block
 
@@ -28,4 +28,33 @@ contexts:
         - meta_scope: comment.block.scss
         - match: \*/
           scope: punctuation.definition.comment.end.scss
+          pop: true
+
+  prototype:
+    - include: comments
+
+  string:
+    - include: string-single
+    - include: string-double
+
+  string-double:
+    - meta_include_prototype: false
+    - match: '"'
+      scope: punctuation.definition.string.begin.scss
+      push:
+        - meta_include_prototype: false
+        - meta_scope: string.quoted.double.scss
+        - match: '"'
+          scope: punctuation.definition.string.end.scss
+          pop: true
+
+  string-single:
+    - meta_include_prototype: false
+    - match: "'"
+      scope: punctuation.definition.string.begin.scss
+      push:
+        - meta_include_prototype: false
+        - meta_scope: string.quoted.single.scss
+        - match: "'"
+          scope: punctuation.definition.string.end.scss
           pop: true

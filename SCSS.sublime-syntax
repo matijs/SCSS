@@ -1,0 +1,31 @@
+%YAML 1.2
+---
+name: SCSS New
+file_extensions:
+  - scss
+scope: source.scss
+
+contexts:
+  main:
+    - include: comment
+
+  comment:
+    - include: comment-line
+    - include: comment-block
+
+  comment-line:
+    - match: //
+      scope: punctuation.definition.comment.begin.scss
+      push:
+        - meta_scope: comment.line.scss
+        - match: "\n"
+          pop: true
+
+  comment-block:
+    - match: /\*
+      scope: punctuation.definition.comment.begin.scss
+      push:
+        - meta_scope: comment.block.scss
+        - match: \*/
+          scope: punctuation.definition.comment.end.scss
+          pop: true
